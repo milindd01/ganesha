@@ -217,11 +217,11 @@
   document.querySelectorAll('[data-action="home"]').forEach(b => b.addEventListener('click', () => showView(homeView)));
   document.querySelectorAll('[data-action="years"]').forEach(b => b.addEventListener('click', () => showView(yearsView)));
   document.getElementById('startSlideshow').addEventListener('click', startAllYearsSlideshow);
-  document.getElementById('gallerySlideshow').addEventListener('click', startCurrentYearSlideshow);
+  document.getElementById('gallerySlideshow').addEventListener('click', startAllYearsSlideshow);
   document.querySelector('.viewer-close').addEventListener('click', () => { stopSlideshow(); clearVideo(); viewer.classList.add('hidden'); resetIdle(); });
   document.querySelector('.nav-button.prev').addEventListener('click', () => { stopSlideshow(); nextPhoto(-1); resetIdle(); });
   document.querySelector('.nav-button.next').addEventListener('click', () => { stopSlideshow(); nextPhoto(1); resetIdle(); });
-  document.getElementById('viewerPlay').addEventListener('click', () => slideshowTimer ? stopSlideshow() : startCurrentYearSlideshow());
+  document.getElementById('viewerPlay').addEventListener('click', () => slideshowTimer ? stopSlideshow() : startAllYearsSlideshow());
   rotateLeftButton.addEventListener('click', () => rotateCurrentPhoto(-90));
   rotateRightButton.addEventListener('click', () => rotateCurrentPhoto(90));
 
