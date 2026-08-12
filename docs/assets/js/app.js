@@ -144,7 +144,7 @@
       viewerImage.src = item.src;
       applyRotation();
     }
-    viewerCaption.textContent = item.caption || `Ganesh ${currentYear}`;
+    viewerCaption.textContent = `${currentYear}`;
     viewerProgress.textContent = `${currentYear} • ${currentIndex + 1} / ${currentList.length}${isVideo(item) ? ' • Video' : ''}`;
   }
 
