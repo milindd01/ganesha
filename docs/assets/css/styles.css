@@ -18,8 +18,7 @@ button{font:inherit}
 .hero-copy{text-align:left}
 .hero-logo-wrap{display:flex;justify-content:center;align-items:center}
 .hero-logo{display:block;width:min(100%,300px);max-width:100%;height:auto;filter:drop-shadow(0 12px 24px rgba(91,20,12,.18))}
-.om{font-family:Georgia,serif;font-size:54px;line-height:1;color:#a52817;text-shadow:0 2px #ffd98d}
-.eyebrow{font-weight:800;letter-spacing:.22em;font-size:11px;color:#9a5b23;margin:6px 0}
+.eyebrow{font-weight:800;letter-spacing:.08em;font-size:clamp(24px,3vw,34px);color:#9a5b23;margin:0 0 10px}
 h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(32px,4.6vw,52px);line-height:1.02;margin:8px 0;color:#7f2014}
 .subtitle{font-family:Georgia,"Times New Roman",serif;font-size:clamp(17px,2.2vw,24px);color:#6b3b22;margin:8px 0 14px}
 .story-blurb{max-width:none;margin:0 0 16px;font-size:17px;line-height:1.55;color:#5d321d}
