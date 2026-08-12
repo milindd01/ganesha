@@ -225,7 +225,7 @@
 
   function resetIdle() {
     if (idleTimer) clearTimeout(idleTimer);
-    if (!slideshowTimer && viewerVideo.paused) idleTimer = setTimeout(startAllYearsSlideshow, 45000);
+    if (!slideshowTimer && viewerVideo.paused) idleTimer = setTimeout(startAllYearsSlideshow, 10000);
   }
 
   document.getElementById('enterGallery').addEventListener('click', () => showView(yearsView));
