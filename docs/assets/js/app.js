@@ -29,6 +29,13 @@
   let currentRotation = 0;
   let slideshowMode = 'all-years';
 
+  function clearIdleTimer() {
+    if (idleTimer) {
+      clearTimeout(idleTimer);
+      idleTimer = null;
+    }
+  }
+
   function detectType(src, explicitType) {
     if (explicitType) return explicitType.toLowerCase();
     return /\.(mp4|m4v|mov|webm)(?:[?#].*)?$/i.test(src || '') ? 'video' : 'image';
@@ -232,12 +239,13 @@
   }
 
   function startAllYearsSlideshow() {
+    clearIdleTimer();
+    stopSlideshow();
     slideshowMode = 'all-years';
     slideshowSequence = buildSequence();
     if (!slideshowSequence.length) return;
     slideshowSequenceIndex = 0;
     showSequenceItem();
-    stopSlideshow();
     document.getElementById('viewerPlay').textContent = 'Ⅱ';
     slideshowTimer = setInterval(() => {
       slideshowSequenceIndex += 1;
@@ -250,6 +258,8 @@
   }
 
   function startDecorationsSlideshow() {
+    clearIdleTimer();
+    stopSlideshow();
     currentYear = 0;
     currentList = decorations;
     if (!currentList.length) return;
@@ -258,8 +268,6 @@
     if (!slideshowSequence.length) return;
     slideshowSequenceIndex = 0;
     showSequenceItem();
-    stopSlideshow();
-    slideshowMode = 'decorations';
     document.getElementById('viewerPlay').textContent = 'Ⅱ';
     slideshowTimer = setInterval(() => {
       slideshowSequenceIndex = (slideshowSequenceIndex + 1) % slideshowSequence.length;
@@ -293,7 +301,7 @@
   }
 
   function resetIdle() {
-    if (idleTimer) clearTimeout(idleTimer);
+    clearIdleTimer();
     if (!slideshowTimer && viewerVideo.paused) idleTimer = setTimeout(startAllYearsSlideshow, 10000);
   }
 
