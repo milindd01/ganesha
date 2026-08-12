@@ -1,4 +1,6 @@
 #!/bin/bash
+set -e
+
 cd "$(dirname "$0")"
 python3 scripts/refresh_gallery_manifest.py
 python3 scripts/build_sites_dist.py

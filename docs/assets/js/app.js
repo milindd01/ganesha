@@ -1,6 +1,7 @@
 (() => {
   const YEARS = Array.from({ length: 26 }, (_, i) => 2001 + i);
   const rawMedia = window.GANESH_PHOTOS || {};
+  const rawDecorations = window.GANESH_DECORATIONS || [];
   const homeView = document.getElementById('homeView');
   const yearsView = document.getElementById('yearsView');
   const galleryView = document.getElementById('galleryView');
@@ -47,6 +48,10 @@
   }
 
   const media = Object.fromEntries(YEARS.map(year => [year, (rawMedia[year] || []).map(item => normalizeItem(item, year)).filter(item => item.src)]));
+  const decorations = rawDecorations.map(item => {
+    const year = Number.parseInt(item.caption, 10) || 0;
+    return normalizeItem(item, year);
+  }).filter(item => item.src);
 
   function isVideo(item) { return item && item.type === 'video'; }
 
@@ -58,6 +63,13 @@
 
   function buildYears() {
     yearGrid.innerHTML = '';
+    if (decorations.length) {
+      const decorationCard = document.createElement('button');
+      decorationCard.className = 'year-card special-card';
+      decorationCard.innerHTML = `<strong>Decorations</strong><span>${decorations.length} years of decor</span>`;
+      decorationCard.addEventListener('click', openDecorations);
+      yearGrid.appendChild(decorationCard);
+    }
     YEARS.forEach(year => {
       const count = (media[year] || []).length;
       const btn = document.createElement('button');
@@ -85,6 +97,29 @@
         btn.innerHTML = `<img src="${escapeHtml(item.src)}" alt="${currentYear}" loading="lazy">`;
       }
       btn.setAttribute('aria-label', `${isVideo(item) ? 'Play video' : 'Open photo'} from ${year}`);
+      btn.addEventListener('click', () => openViewer(index));
+      photoGrid.appendChild(btn);
+    });
+    emptyState.classList.toggle('hidden', currentList.length !== 0);
+    showView(galleryView);
+  }
+
+  function openDecorations() {
+    currentYear = 0;
+    currentList = decorations;
+    galleryTitle.textContent = 'Decorations Through the Years';
+    galleryCount.textContent = currentList.length ? `${currentList.length} decoration highlights` : 'Ready for decoration photos';
+    photoGrid.innerHTML = '';
+    currentList.forEach((item, index) => {
+      const btn = document.createElement('button');
+      btn.className = 'photo-card' + (isVideo(item) ? ' video-card' : '');
+      if (isVideo(item)) {
+        const poster = item.poster ? ` poster="${escapeHtml(item.poster)}"` : '';
+        btn.innerHTML = `<video src="${escapeHtml(item.src)}"${poster} muted playsinline preload="metadata"></video><span class="video-badge" aria-hidden="true">▶</span>`;
+      } else {
+        btn.innerHTML = `<img src="${escapeHtml(item.src)}" alt="${escapeHtml(item.caption)} decorations" loading="lazy">`;
+      }
+      btn.setAttribute('aria-label', `${isVideo(item) ? 'Play decoration video' : 'Open decoration photo'} from ${item.caption}`);
       btn.addEventListener('click', () => openViewer(index));
       photoGrid.appendChild(btn);
     });
@@ -144,8 +179,9 @@
       viewerImage.src = item.src;
       applyRotation();
     }
-    viewerCaption.textContent = `${currentYear}`;
-    viewerProgress.textContent = `${currentYear} • ${currentIndex + 1} / ${currentList.length}${isVideo(item) ? ' • Video' : ''}`;
+    const label = item.caption || `${currentYear}`;
+    viewerCaption.textContent = label;
+    viewerProgress.textContent = `${label} • ${currentIndex + 1} / ${currentList.length}${isVideo(item) ? ' • Video' : ''}`;
   }
 
   function nextPhoto(direction = 1) {
