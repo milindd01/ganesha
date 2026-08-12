@@ -27,6 +27,7 @@
   let slideshowSequenceIndex = 0;
   let touchStartX = 0;
   let currentRotation = 0;
+  let slideshowMode = 'all-years';
 
   function detectType(src, explicitType) {
     if (explicitType) return explicitType.toLowerCase();
@@ -67,7 +68,7 @@
       const decorationCard = document.createElement('button');
       decorationCard.className = 'year-card special-card';
       decorationCard.innerHTML = `<strong>Decorations</strong><span>${decorations.length} years of decor</span>`;
-      decorationCard.addEventListener('click', openDecorations);
+      decorationCard.addEventListener('click', startDecorationsSlideshow);
       yearGrid.appendChild(decorationCard);
     }
     YEARS.forEach(year => {
@@ -127,6 +128,16 @@
     showView(galleryView);
   }
 
+  function buildDecorationsSequence() {
+    return [...decorations]
+      .filter(item => !isVideo(item))
+      .sort((a, b) => Number.parseInt(a.caption, 10) - Number.parseInt(b.caption, 10))
+      .map(item => ({
+        year: Number.parseInt(item.caption, 10) || 0,
+        index: decorations.indexOf(item),
+      }));
+  }
+
   function escapeHtml(text) {
     return String(text).replace(/[&<>'"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#039;','"':'&quot;'}[c]));
   }
@@ -162,6 +173,7 @@
   function renderViewer() {
     const item = currentList[currentIndex];
     if (!item) return;
+    viewer.classList.toggle('decorations-mode', slideshowMode === 'decorations');
     if (isVideo(item)) {
       stopSlideshow();
       viewerImage.classList.add('hidden');
@@ -194,6 +206,8 @@
   function stopSlideshow() {
     if (slideshowTimer) clearInterval(slideshowTimer);
     slideshowTimer = null;
+    slideshowMode = 'all-years';
+    viewer.classList.remove('decorations-mode');
     document.getElementById('viewerPlay').textContent = '▶';
   }
 
@@ -218,6 +232,7 @@
   }
 
   function startAllYearsSlideshow() {
+    slideshowMode = 'all-years';
     slideshowSequence = buildSequence();
     if (!slideshowSequence.length) return;
     slideshowSequenceIndex = 0;
@@ -234,10 +249,28 @@
     }, 6000);
   }
 
+  function startDecorationsSlideshow() {
+    currentYear = 0;
+    currentList = decorations;
+    if (!currentList.length) return;
+    slideshowMode = 'decorations';
+    slideshowSequence = buildDecorationsSequence();
+    if (!slideshowSequence.length) return;
+    slideshowSequenceIndex = 0;
+    showSequenceItem();
+    stopSlideshow();
+    slideshowMode = 'decorations';
+    document.getElementById('viewerPlay').textContent = 'Ⅱ';
+    slideshowTimer = setInterval(() => {
+      slideshowSequenceIndex = (slideshowSequenceIndex + 1) % slideshowSequence.length;
+      showSequenceItem();
+    }, 2500);
+  }
+
   function showSequenceItem() {
     const seq = slideshowSequence[slideshowSequenceIndex];
     currentYear = seq.year;
-    currentList = media[currentYear] || [];
+    currentList = slideshowMode === 'decorations' ? decorations : (media[currentYear] || []);
     currentIndex = seq.index;
     renderViewer();
     viewer.classList.remove('hidden');
@@ -265,6 +298,7 @@
   }
 
   document.getElementById('enterGallery').addEventListener('click', () => showView(yearsView));
+  document.getElementById('startDecorations').addEventListener('click', startDecorationsSlideshow);
   document.querySelectorAll('[data-action="home"]').forEach(b => b.addEventListener('click', () => showView(homeView)));
   document.querySelectorAll('[data-action="years"]').forEach(b => b.addEventListener('click', () => showView(yearsView)));
   document.getElementById('startSlideshow').addEventListener('click', startAllYearsSlideshow);
@@ -272,7 +306,17 @@
   document.querySelector('.viewer-close').addEventListener('click', () => { stopSlideshow(); clearVideo(); viewer.classList.add('hidden'); resetIdle(); });
   document.querySelector('.nav-button.prev').addEventListener('click', () => { stopSlideshow(); nextPhoto(-1); resetIdle(); });
   document.querySelector('.nav-button.next').addEventListener('click', () => { stopSlideshow(); nextPhoto(1); resetIdle(); });
-  document.getElementById('viewerPlay').addEventListener('click', () => slideshowTimer ? stopSlideshow() : startAllYearsSlideshow());
+  document.getElementById('viewerPlay').addEventListener('click', () => {
+    if (slideshowTimer) {
+      stopSlideshow();
+      return;
+    }
+    if (currentList === decorations || slideshowMode === 'decorations') {
+      startDecorationsSlideshow();
+      return;
+    }
+    startAllYearsSlideshow();
+  });
   rotateLeftButton.addEventListener('click', () => rotateCurrentPhoto(-90));
   rotateRightButton.addEventListener('click', () => rotateCurrentPhoto(90));
 
