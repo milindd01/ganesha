@@ -14,28 +14,26 @@
 </head>
 <body>
   <main id="app" class="app-shell">
+    <input id="selfieInput" class="hidden" type="file" accept="image/*" capture="user" />
     <section id="selfieView" class="view selfie-view" aria-label="Take a selfie">
       <header class="topbar">
         <button class="icon-button" data-action="home" aria-label="Home">⌂</button>
         <div>
           <div class="topbar-title">Take A Selfie</div>
-          <div class="topbar-subtitle">Simple camera mode for guests</div>
+          <div class="topbar-subtitle">Quick photo capture for guests</div>
         </div>
         <div></div>
       </header>
       <div class="selfie-panel">
-        <p class="selfie-intro">Tap start, take a photo, then save it to this device or share it from the iPad.</p>
+        <p class="selfie-intro">The camera opens right away. After the photo is taken, you can retake it or save/share it from here.</p>
         <div class="selfie-stage">
-          <video id="selfieVideo" class="selfie-video hidden" playsinline autoplay muted></video>
           <img id="selfiePreview" class="selfie-preview hidden" alt="Selfie preview" />
           <canvas id="selfieCanvas" class="hidden"></canvas>
-          <div id="selfiePlaceholder" class="selfie-placeholder">Camera preview will appear here</div>
+          <div id="selfiePlaceholder" class="selfie-placeholder">Your selfie will appear here after you take it</div>
         </div>
         <p id="selfieStatus" class="selfie-status">Ready when you are.</p>
         <div class="hero-actions selfie-actions">
-          <button id="startSelfieCamera" class="primary-button">Start Camera</button>
-          <button id="captureSelfie" class="primary-button secondary-button hidden">Capture</button>
-          <button id="retakeSelfie" class="primary-button secondary-button hidden">Retake</button>
+          <button id="retakeSelfie" class="primary-button secondary-button hidden">Take Another Photo</button>
           <button id="saveSelfie" class="primary-button hidden">Save / Share</button>
         </div>
       </div>

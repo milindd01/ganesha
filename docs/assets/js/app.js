@@ -16,13 +16,11 @@
   const viewerProgress = document.getElementById('viewerProgress');
   const galleryTitle = document.getElementById('galleryTitle');
   const galleryCount = document.getElementById('galleryCount');
-  const selfieVideo = document.getElementById('selfieVideo');
+  const selfieInput = document.getElementById('selfieInput');
   const selfiePreview = document.getElementById('selfiePreview');
   const selfieCanvas = document.getElementById('selfieCanvas');
   const selfiePlaceholder = document.getElementById('selfiePlaceholder');
   const selfieStatus = document.getElementById('selfieStatus');
-  const startSelfieCameraButton = document.getElementById('startSelfieCamera');
-  const captureSelfieButton = document.getElementById('captureSelfie');
   const retakeSelfieButton = document.getElementById('retakeSelfie');
   const saveSelfieButton = document.getElementById('saveSelfie');
 
@@ -35,7 +33,6 @@
   let slideshowSequenceIndex = 0;
   let touchStartX = 0;
   let slideshowMode = 'all-years';
-  let selfieStream = null;
   let selfieImageUrl = '';
 
   function clearIdleTimer() {
@@ -74,7 +71,6 @@
 
   function showView(view) {
     [selfieView, homeView, yearsView, galleryView].forEach(v => v.classList.remove('active'));
-    if (view !== selfieView) stopSelfieCamera();
     view.classList.add('active');
     resetIdle();
   }
@@ -86,9 +82,7 @@
   function resetSelfieStage() {
     selfiePreview.classList.add('hidden');
     selfiePreview.removeAttribute('src');
-    selfieVideo.classList.add('hidden');
     selfiePlaceholder.classList.remove('hidden');
-    captureSelfieButton.classList.add('hidden');
     retakeSelfieButton.classList.add('hidden');
     saveSelfieButton.classList.add('hidden');
     if (selfieImageUrl) {
@@ -97,64 +91,45 @@
     }
   }
 
-  function stopSelfieCamera() {
-    if (selfieStream) {
-      selfieStream.getTracks().forEach(track => track.stop());
-      selfieStream = null;
-    }
-    selfieVideo.pause();
-    selfieVideo.srcObject = null;
-    startSelfieCameraButton.textContent = 'Start Camera';
-  }
-
-  async function startSelfieCamera() {
-    if (!navigator.mediaDevices || !navigator.mediaDevices.getUserMedia) {
-      setSelfieStatus('This browser does not support the camera.');
-      return;
-    }
-    try {
-      stopSelfieCamera();
-      resetSelfieStage();
-      selfieStream = await navigator.mediaDevices.getUserMedia({
-        video: { facingMode: 'user' },
-        audio: false
-      });
-      selfieVideo.srcObject = selfieStream;
-      selfiePlaceholder.classList.add('hidden');
-      selfieVideo.classList.remove('hidden');
-      captureSelfieButton.classList.remove('hidden');
-      startSelfieCameraButton.textContent = 'Restart Camera';
-      setSelfieStatus('Position yourself, then tap Capture.');
-    } catch (error) {
-      setSelfieStatus('Camera access was not allowed. Please allow camera access and try again.');
-    }
-  }
-
-  function showSelfieView() {
-    showView(selfieView);
+  function openSelfieCamera() {
     resetSelfieStage();
-    stopSelfieCamera();
-    setSelfieStatus('Ready when you are.');
-  }
-
-  function captureSelfie() {
-    if (!selfieStream || !selfieVideo.videoWidth || !selfieVideo.videoHeight) {
-      setSelfieStatus('Start the camera first.');
+    setSelfieStatus('Opening camera...');
+    if (selfieInput.showPicker) {
+      selfieInput.showPicker();
       return;
     }
-    selfieCanvas.width = selfieVideo.videoWidth;
-    selfieCanvas.height = selfieVideo.videoHeight;
-    const context = selfieCanvas.getContext('2d');
-    context.drawImage(selfieVideo, 0, 0, selfieCanvas.width, selfieCanvas.height);
+    selfieInput.click();
+  }
+
+  function showSelfieResult() {
+    showView(selfieView);
+  }
+
+  function loadSelfieFile(file) {
+    if (!file) {
+      setSelfieStatus('No photo selected.');
+      return;
+    }
     if (selfieImageUrl) URL.revokeObjectURL(selfieImageUrl);
-    selfieImageUrl = selfieCanvas.toDataURL('image/jpeg', 0.92);
-    selfiePreview.src = selfieImageUrl;
-    selfiePreview.classList.remove('hidden');
-    selfieVideo.classList.add('hidden');
-    captureSelfieButton.classList.add('hidden');
-    retakeSelfieButton.classList.remove('hidden');
-    saveSelfieButton.classList.remove('hidden');
-    setSelfieStatus('Selfie captured. Save it or retake it.');
+    selfieImageUrl = URL.createObjectURL(file);
+    const previewImage = new Image();
+    previewImage.onload = () => {
+      selfieCanvas.width = previewImage.naturalWidth;
+      selfieCanvas.height = previewImage.naturalHeight;
+      const context = selfieCanvas.getContext('2d');
+      context.drawImage(previewImage, 0, 0);
+      selfiePreview.src = selfieImageUrl;
+      selfiePreview.classList.remove('hidden');
+      selfiePlaceholder.classList.add('hidden');
+      retakeSelfieButton.classList.remove('hidden');
+      saveSelfieButton.classList.remove('hidden');
+      showSelfieResult();
+      setSelfieStatus('Photo captured. Save it, share it, or take another one.');
+    };
+    previewImage.onerror = () => {
+      setSelfieStatus('Could not load that photo.');
+    };
+    previewImage.src = selfieImageUrl;
   }
 
   async function saveSelfie() {
@@ -413,14 +388,17 @@
 
   document.getElementById('enterGallery').addEventListener('click', () => showView(yearsView));
   document.getElementById('startDecorations').addEventListener('click', startDecorationsSlideshow);
-  document.getElementById('showSelfieView').addEventListener('click', showSelfieView);
+  document.getElementById('showSelfieView').addEventListener('click', openSelfieCamera);
   document.querySelectorAll('[data-action="home"]').forEach(b => b.addEventListener('click', () => showView(homeView)));
   document.querySelectorAll('[data-action="years"]').forEach(b => b.addEventListener('click', () => showView(yearsView)));
   document.getElementById('startSlideshow').addEventListener('click', startAllYearsSlideshow);
   document.getElementById('gallerySlideshow').addEventListener('click', startAllYearsSlideshow);
-  startSelfieCameraButton.addEventListener('click', startSelfieCamera);
-  captureSelfieButton.addEventListener('click', captureSelfie);
-  retakeSelfieButton.addEventListener('click', startSelfieCamera);
+  selfieInput.addEventListener('change', event => {
+    const [file] = event.target.files || [];
+    loadSelfieFile(file);
+    selfieInput.value = '';
+  });
+  retakeSelfieButton.addEventListener('click', openSelfieCamera);
   saveSelfieButton.addEventListener('click', saveSelfie);
   document.querySelector('.viewer-close').addEventListener('click', () => { stopSlideshow(); clearVideo(); viewer.classList.add('hidden'); resetIdle(); });
   document.querySelector('.nav-button.prev').addEventListener('click', () => { stopSlideshow(); nextPhoto(-1); resetIdle(); });
