@@ -1,4 +1,4 @@
-const CACHE = 'ganesh-25-v2-media';
+const CACHE = 'ganesh-25-v3-media';
 const APP_SHELL = [
   './',
   './index.html',
