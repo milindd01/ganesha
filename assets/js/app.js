@@ -161,8 +161,19 @@
     document.getElementById('viewerPlay').textContent = '▶';
   }
 
+  function shuffleItems(items) {
+    const shuffled = [...items];
+    for (let i = shuffled.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]];
+    }
+    return shuffled;
+  }
+
   function buildSequence() {
-    return YEARS.flatMap(year => (media[year] || []).map((item, index) => ({ year, item, index })).filter(entry => !isVideo(entry.item)));
+    return shuffleItems(
+      YEARS.flatMap(year => (media[year] || []).map((item, index) => ({ year, item, index })).filter(entry => !isVideo(entry.item)))
+    );
   }
 
   function prefetchAllMedia() {
@@ -178,7 +189,11 @@
     stopSlideshow();
     document.getElementById('viewerPlay').textContent = 'Ⅱ';
     slideshowTimer = setInterval(() => {
-      slideshowSequenceIndex = (slideshowSequenceIndex + 1) % slideshowSequence.length;
+      slideshowSequenceIndex += 1;
+      if (slideshowSequenceIndex >= slideshowSequence.length) {
+        slideshowSequence = buildSequence();
+        slideshowSequenceIndex = 0;
+      }
       showSequenceItem();
     }, 6000);
   }
