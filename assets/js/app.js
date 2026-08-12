@@ -15,8 +15,6 @@
   const viewerProgress = document.getElementById('viewerProgress');
   const galleryTitle = document.getElementById('galleryTitle');
   const galleryCount = document.getElementById('galleryCount');
-  const rotateLeftButton = document.getElementById('rotateLeft');
-  const rotateRightButton = document.getElementById('rotateRight');
 
   let currentYear = 2026;
   let currentList = [];
@@ -26,7 +24,6 @@
   let slideshowSequence = [];
   let slideshowSequenceIndex = 0;
   let touchStartX = 0;
-  let currentRotation = 0;
   let slideshowMode = 'all-years';
 
   function clearIdleTimer() {
@@ -152,21 +149,8 @@
   function openViewer(index) {
     if (!currentList.length) return;
     currentIndex = (index + currentList.length) % currentList.length;
-    currentRotation = 0;
     renderViewer();
     viewer.classList.remove('hidden');
-    resetIdle();
-  }
-
-  function applyRotation() {
-    viewerImage.style.transform = `rotate(${currentRotation}deg)`;
-  }
-
-  function rotateCurrentPhoto(direction) {
-    const item = currentList[currentIndex];
-    if (!item || isVideo(item)) return;
-    currentRotation = (currentRotation + direction + 360) % 360;
-    applyRotation();
     resetIdle();
   }
 
@@ -185,8 +169,6 @@
       stopSlideshow();
       viewerImage.classList.add('hidden');
       viewerVideo.classList.remove('hidden');
-      currentRotation = 0;
-      viewerImage.style.transform = '';
       viewerVideo.src = item.src;
       if (item.poster) viewerVideo.poster = item.poster;
       else viewerVideo.removeAttribute('poster');
@@ -196,7 +178,7 @@
       viewerVideo.classList.add('hidden');
       viewerImage.classList.remove('hidden');
       viewerImage.src = item.src;
-      applyRotation();
+      viewerImage.style.transform = '';
     }
     const label = item.caption || `${currentYear}`;
     viewerCaption.textContent = label;
@@ -206,7 +188,6 @@
   function nextPhoto(direction = 1) {
     if (!currentList.length) return;
     currentIndex = (currentIndex + direction + currentList.length) % currentList.length;
-    currentRotation = 0;
     renderViewer();
   }
 
@@ -325,9 +306,6 @@
     }
     startAllYearsSlideshow();
   });
-  rotateLeftButton.addEventListener('click', () => rotateCurrentPhoto(-90));
-  rotateRightButton.addEventListener('click', () => rotateCurrentPhoto(90));
-
   viewerVideo.addEventListener('play', () => { stopSlideshow(); if (idleTimer) clearTimeout(idleTimer); });
   viewerVideo.addEventListener('pause', resetIdle);
   viewerVideo.addEventListener('ended', resetIdle);
