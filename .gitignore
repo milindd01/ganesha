@@ -1,5 +1,6 @@
 dist/
-photos/
+/photos/
 .publish-src/
+scripts/__pycache__/
 .DS_Store
 Thumbs.db
