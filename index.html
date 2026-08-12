@@ -14,6 +14,33 @@
 </head>
 <body>
   <main id="app" class="app-shell">
+    <section id="selfieView" class="view selfie-view" aria-label="Take a selfie">
+      <header class="topbar">
+        <button class="icon-button" data-action="home" aria-label="Home">⌂</button>
+        <div>
+          <div class="topbar-title">Take A Selfie</div>
+          <div class="topbar-subtitle">Simple camera mode for guests</div>
+        </div>
+        <div></div>
+      </header>
+      <div class="selfie-panel">
+        <p class="selfie-intro">Tap start, take a photo, then save it to this device or share it from the iPad.</p>
+        <div class="selfie-stage">
+          <video id="selfieVideo" class="selfie-video hidden" playsinline autoplay muted></video>
+          <img id="selfiePreview" class="selfie-preview hidden" alt="Selfie preview" />
+          <canvas id="selfieCanvas" class="hidden"></canvas>
+          <div id="selfiePlaceholder" class="selfie-placeholder">Camera preview will appear here</div>
+        </div>
+        <p id="selfieStatus" class="selfie-status">Ready when you are.</p>
+        <div class="hero-actions selfie-actions">
+          <button id="startSelfieCamera" class="primary-button">Start Camera</button>
+          <button id="captureSelfie" class="primary-button secondary-button hidden">Capture</button>
+          <button id="retakeSelfie" class="primary-button secondary-button hidden">Retake</button>
+          <button id="saveSelfie" class="primary-button hidden">Save / Share</button>
+        </div>
+      </div>
+    </section>
+
     <section id="homeView" class="view home-view active" aria-label="Ganesh Digital Gallery home">
       <div class="mandala mandala-a"></div>
       <div class="mandala mandala-b"></div>
@@ -30,6 +57,7 @@
             <div class="hero-actions">
               <button id="enterGallery" class="primary-button">Enter Gallery</button>
               <button id="startDecorations" class="primary-button secondary-button">Decor Thru Years</button>
+              <button id="showSelfieView" class="primary-button selfie-button">Take A Selfie</button>
             </div>
             <p class="hint">Touch a year to browse • Swipe photos & videos • Slideshow starts after 45 seconds of inactivity</p>
           </div>
