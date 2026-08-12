@@ -30,9 +30,7 @@ def natural_sort_key(value: str) -> list[object]:
 
 
 def make_caption(stem: str, year: int) -> str:
-    cleaned = re.sub(r"[_-]+", " ", stem).strip()
-    cleaned = re.sub(r"\s+", " ", cleaned)
-    return f"{year} • {cleaned}" if cleaned else f"Ganesh {year}"
+    return str(year)
 
 
 def find_poster(year_dir: Path, stem: str) -> str | None:

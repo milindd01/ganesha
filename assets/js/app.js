@@ -35,14 +35,14 @@
   function normalizeItem(item, year) {
     if (typeof item === 'string') {
       const src = item.includes('/') ? item : `photos/${year}/${item}`;
-      return { src, type: detectType(src), caption: `Ganesh ${year}` };
+      return { src, type: detectType(src), caption: `${year}` };
     }
     const src = item && item.src ? item.src : '';
     return {
       ...item,
       src,
       type: detectType(src, item && item.type),
-      caption: (item && item.caption) || `Ganesh ${year}`
+      caption: `${year}`
     };
   }
 
@@ -82,9 +82,9 @@
         const poster = item.poster ? ` poster="${escapeHtml(item.poster)}"` : '';
         btn.innerHTML = `<video src="${escapeHtml(item.src)}"${poster} muted playsinline preload="metadata"></video><span class="video-badge" aria-hidden="true">▶</span>`;
       } else {
-        btn.innerHTML = `<img src="${escapeHtml(item.src)}" alt="${escapeHtml(item.caption)}" loading="lazy">`;
+        btn.innerHTML = `<img src="${escapeHtml(item.src)}" alt="${currentYear}" loading="lazy">`;
       }
-      btn.setAttribute('aria-label', `${isVideo(item) ? 'Play video' : 'Open photo'}: ${item.caption}`);
+      btn.setAttribute('aria-label', `${isVideo(item) ? 'Play video' : 'Open photo'} from ${year}`);
       btn.addEventListener('click', () => openViewer(index));
       photoGrid.appendChild(btn);
     });
