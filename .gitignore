@@ -1,0 +1,5 @@
+dist/
+photos/
+.publish-src/
+.DS_Store
+Thumbs.db

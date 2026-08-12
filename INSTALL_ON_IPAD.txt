@@ -1,0 +1,44 @@
+GANESH 25TH ANNIVERSARY — INSTALL ON IPAD
+==========================================
+
+IMPORTANT
+This is a Progressive Web App (PWA). For the Home Screen app and reliable offline caching,
+the folder should first be published at an HTTPS web address. The ZIP itself is the source
+package; it is not installed by tapping the ZIP on the iPad.
+
+RECOMMENDED EVENT SETUP
+1. Add your Ganesh photos to the year folders under photos/2001 through photos/2026.
+2. Put any MP4 videos in the matching year folder too.
+3. Start the local site once so it rebuilds the gallery list from the folder contents.
+4. Upload the entire folder to any HTTPS static website host.
+5. On the iPad, open that HTTPS address in SAFARI.
+6. Wait for the first page to finish loading while online.
+7. Tap the Share button (square with upward arrow).
+8. Choose "Add to Home Screen".
+9. Name it "Ganesh 25" and tap Add.
+10. Open the new Ganesh 25 icon from the Home Screen once while still online.
+11. Turn Wi-Fi off and test it. Previously loaded app files/photos should continue to work offline.
+
+FOR THE EVENT
+- Keep the iPad connected to power.
+- Set Auto-Lock to Never: Settings > Display & Brightness > Auto-Lock > Never.
+- Open Ganesh 25 from the Home Screen, not from a Safari tab.
+- The gallery is touch/swipe friendly.
+- After about 45 seconds with no interaction, the all-years slideshow begins automatically.
+
+OPTIONAL KIOSK MODE (GUIDED ACCESS)
+1. Settings > Accessibility > Guided Access > turn it on and set a passcode.
+2. Open Ganesh 25.
+3. Triple-click the iPad top/side button.
+4. Start Guided Access.
+This keeps guests inside the gallery app during the celebration.
+
+TIMELINE NOTE
+The family celebration began in September 2001. The gallery therefore includes years 2001–2026.
+The 2026 event is presented as the 25th anniversary (25 years since September 2001).
+
+
+VIDEO SUPPORT
+-------------
+The gallery supports photos and videos in the same year folder. For iPad, use MP4 files encoded with H.264 video (AAC audio recommended).
+Videos display with a play badge and open with native playback controls. Automatic slideshows use photos only.

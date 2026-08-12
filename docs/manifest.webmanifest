@@ -1,0 +1,15 @@
+{
+  "name": "Ganesh 25th Anniversary Gallery",
+  "short_name": "Ganesh 25",
+  "description": "Family Ganesh celebration gallery, September 2001–2026.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "any",
+  "background_color": "#5c1914",
+  "theme_color": "#5c1914",
+  "icons": [
+    {"src":"icons/icon-192.png","sizes":"192x192","type":"image/png"},
+    {"src":"icons/icon-512.png","sizes":"512x512","type":"image/png"}
+  ]
+}
