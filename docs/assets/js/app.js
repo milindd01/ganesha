@@ -455,7 +455,7 @@
   function resetIdle() {
     clearIdleTimer();
     if (selfieView.classList.contains('active')) return;
-    if (!slideshowTimer && viewerVideo.paused) idleTimer = setTimeout(startAllYearsSlideshow, 10000);
+    if (!slideshowTimer && viewerVideo.paused) idleTimer = setTimeout(startAllYearsSlideshow, 45000);
   }
 
   document.getElementById('enterGallery').addEventListener('click', () => showView(yearsView));
