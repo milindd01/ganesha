@@ -1,4 +1,4 @@
-const CACHE = 'ganesh-25-v6-media';
+const CACHE = 'ganesh-25-v8-media';
 const APP_SHELL = [
   './',
   './index.html',
@@ -7,6 +7,7 @@ const APP_SHELL = [
   './assets/js/photos.js',
   './assets/js/app.js',
   './assets/audio/Soundtrack.mp3',
+  './assets/images/selfie-frame.svg',
   './icons/apple-touch-icon.png',
   './icons/icon-192.png',
   './icons/icon-512.png'
@@ -27,7 +28,8 @@ function isAppShellRequest(requestUrl) {
     requestUrl.pathname.endsWith('/assets/css/styles.css') ||
     requestUrl.pathname.endsWith('/assets/js/photos.js') ||
     requestUrl.pathname.endsWith('/assets/js/app.js') ||
-    requestUrl.pathname.endsWith('/assets/audio/Soundtrack.mp3');
+    requestUrl.pathname.endsWith('/assets/audio/Soundtrack.mp3') ||
+    requestUrl.pathname.endsWith('/assets/images/selfie-frame.svg');
 }
 
 self.addEventListener('fetch', event => {
