@@ -11,24 +11,27 @@
     </linearGradient>
   </defs>
 
-  <rect x="24" y="24" width="1552" height="1152" rx="52" fill="none" stroke="url(#maroon)" stroke-width="16"/>
-  <rect x="52" y="52" width="1496" height="1096" rx="40" fill="none" stroke="url(#gold)" stroke-width="6"/>
+  <rect x="22" y="22" width="1556" height="1156" rx="54" fill="none" stroke="url(#maroon)" stroke-width="16"/>
+  <rect x="48" y="48" width="1504" height="1104" rx="42" fill="none" stroke="url(#gold)" stroke-width="6"/>
 
-  <g fill="none" stroke="url(#gold)" stroke-width="10" stroke-linecap="round">
-    <path d="M120 148c44-54 99-86 170-98"/>
-    <path d="M1480 148c-44-54-99-86-170-98"/>
-    <path d="M120 1052c44 54 99 86 170 98"/>
-    <path d="M1480 1052c-44 54-99 86-170 98"/>
+  <rect x="86" y="84" width="1428" height="88" rx="28" fill="#621512" fill-opacity=".9" stroke="url(#gold)" stroke-width="3"/>
+  <rect x="86" y="1026" width="1428" height="88" rx="28" fill="#621512" fill-opacity=".9" stroke="url(#gold)" stroke-width="3"/>
+
+  <g fill="none" stroke="url(#gold)" stroke-width="8" stroke-linecap="round">
+    <path d="M104 196c34-32 70-52 120-64"/>
+    <path d="M1496 196c-34-32-70-52-120-64"/>
+    <path d="M104 1002c34 32 70 52 120 64"/>
+    <path d="M1496 1002c-34 32-70 52-120 64"/>
   </g>
 
-  <text x="800" y="112" text-anchor="middle" font-size="76" font-family="Georgia, 'Times New Roman', serif" fill="#fff7dc" font-weight="700">Deodhars' 25th</text>
-  <text x="800" y="160" text-anchor="middle" font-size="34" font-family="Georgia, 'Times New Roman', serif" font-style="italic" fill="#f7df9a" letter-spacing="1.5">Pic with Bappa</text>
+  <text x="800" y="138" text-anchor="middle" font-size="66" font-family="Georgia, 'Times New Roman', serif" fill="#fff7dc" font-weight="700">Deodhars' 25th</text>
+  <text x="800" y="1078" text-anchor="middle" font-size="34" font-family="Georgia, 'Times New Roman', serif" font-style="italic" fill="#f7df9a" letter-spacing="1.4">Pic with Bappa</text>
 
-  <text x="800" y="1090" text-anchor="middle" font-size="40" font-family="Georgia, 'Times New Roman', serif" fill="#fff7dc" font-weight="700">2001 - 2026</text>
-  <text x="800" y="1132" text-anchor="middle" font-size="26" font-family="Georgia, 'Times New Roman', serif" font-style="italic" fill="#f7df9a" letter-spacing="1.5">Ganesh Chaturthi</text>
+  <text x="310" y="1078" text-anchor="middle" font-size="30" font-family="Georgia, 'Times New Roman', serif" fill="#fff7dc" font-weight="700">2001 - 2026</text>
+  <text x="1288" y="1078" text-anchor="middle" font-size="28" font-family="Georgia, 'Times New Roman', serif" fill="#fff7dc" font-style="italic">Ganesh Chaturthi</text>
 
-  <g transform="translate(800 210)">
-    <path d="M0-24c20 8 40 24 54 46-25-11-47-11-54-11-7 0-29 0-54 11 14-22 34-38 54-46zm0-19c-27 16-51 43-63 76 31-18 54-21 63-21s32 3 63 21c-12-33-36-60-63-76z" fill="url(#maroon)"/>
-    <circle cx="0" cy="18" r="8" fill="#a76a22"/>
+  <g transform="translate(800 186)">
+    <path d="M0-18c18 6 34 20 46 38-21-9-39-9-46-9-7 0-25 0-46 9 12-18 28-32 46-38zm0-14c-23 14-43 35-53 62 27-14 46-17 53-17s26 3 53 17c-10-27-30-48-53-62z" fill="url(#maroon)"/>
+    <circle cx="0" cy="14" r="7" fill="#a76a22"/>
   </g>
 </svg>
