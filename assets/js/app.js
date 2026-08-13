@@ -3,13 +3,13 @@
   const rawMedia = window.GANESH_PHOTOS || {};
   const rawDecorations = window.GANESH_DECORATIONS || [];
   const SELFIE_FRAME_SRC = 'assets/images/selfie-frame.svg';
-  const SELFIE_FRAME_WIDTH = 1200;
-  const SELFIE_FRAME_HEIGHT = 1600;
+  const SELFIE_FRAME_WIDTH = 1600;
+  const SELFIE_FRAME_HEIGHT = 1200;
   const SELFIE_PHOTO_WINDOW = {
-    x: 138,
-    y: 286,
-    width: 924,
-    height: 930,
+    x: 170,
+    y: 210,
+    width: 1260,
+    height: 730,
     radius: 34
   };
   const soundtrack = document.getElementById('soundtrack');

@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1600">
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 1200">
   <defs>
     <linearGradient id="gold" x1="0" x2="1" y1="0" y2="1">
       <stop offset="0%" stop-color="#f7df9a"/>
@@ -10,20 +10,25 @@
       <stop offset="100%" stop-color="#4e0d0b"/>
     </linearGradient>
   </defs>
-  <rect x="24" y="24" width="1152" height="1552" rx="56" fill="none" stroke="url(#maroon)" stroke-width="16"/>
-  <rect x="52" y="52" width="1096" height="1496" rx="44" fill="none" stroke="url(#gold)" stroke-width="6"/>
+
+  <rect x="24" y="24" width="1552" height="1152" rx="52" fill="none" stroke="url(#maroon)" stroke-width="16"/>
+  <rect x="52" y="52" width="1496" height="1096" rx="40" fill="none" stroke="url(#gold)" stroke-width="6"/>
+
   <g fill="none" stroke="url(#gold)" stroke-width="10" stroke-linecap="round">
-    <path d="M120 184c36-46 79-73 134-86"/>
-    <path d="M1080 184c-36-46-79-73-134-86"/>
-    <path d="M120 1416c36 46 79 73 134 86"/>
-    <path d="M1080 1416c-36 46-79-73-134-86"/>
+    <path d="M120 148c44-54 99-86 170-98"/>
+    <path d="M1480 148c-44-54-99-86-170-98"/>
+    <path d="M120 1052c44 54 99 86 170 98"/>
+    <path d="M1480 1052c-44 54-99 86-170 98"/>
   </g>
-  <text x="600" y="118" text-anchor="middle" font-size="70" font-family="Georgia, 'Times New Roman', serif" fill="#fff7dc" font-weight="700">Deodhars' 25th</text>
-  <text x="600" y="166" text-anchor="middle" font-size="34" font-family="Georgia, 'Times New Roman', serif" font-style="italic" fill="#f7df9a" letter-spacing="1.5">Pic with Bappa</text>
-  <text x="600" y="1490" text-anchor="middle" font-size="38" font-family="Georgia, 'Times New Roman', serif" fill="#fff7dc" font-weight="700">2001 - 2026</text>
-  <text x="600" y="1530" text-anchor="middle" font-size="26" font-family="Georgia, 'Times New Roman', serif" font-style="italic" fill="#f7df9a" letter-spacing="1.5">Ganesh Chaturthi</text>
-  <g transform="translate(600 228)">
-    <path d="M0-26c20 8 40 24 54 46-25-11-47-11-54-11-7 0-29 0-54 11 14-22 34-38 54-46zm0-19c-27 16-51 43-63 76 31-18 54-21 63-21s32 3 63 21c-12-33-36-60-63-76z" fill="url(#maroon)"/>
+
+  <text x="800" y="112" text-anchor="middle" font-size="76" font-family="Georgia, 'Times New Roman', serif" fill="#fff7dc" font-weight="700">Deodhars' 25th</text>
+  <text x="800" y="160" text-anchor="middle" font-size="34" font-family="Georgia, 'Times New Roman', serif" font-style="italic" fill="#f7df9a" letter-spacing="1.5">Pic with Bappa</text>
+
+  <text x="800" y="1090" text-anchor="middle" font-size="40" font-family="Georgia, 'Times New Roman', serif" fill="#fff7dc" font-weight="700">2001 - 2026</text>
+  <text x="800" y="1132" text-anchor="middle" font-size="26" font-family="Georgia, 'Times New Roman', serif" font-style="italic" fill="#f7df9a" letter-spacing="1.5">Ganesh Chaturthi</text>
+
+  <g transform="translate(800 210)">
+    <path d="M0-24c20 8 40 24 54 46-25-11-47-11-54-11-7 0-29 0-54 11 14-22 34-38 54-46zm0-19c-27 16-51 43-63 76 31-18 54-21 63-21s32 3 63 21c-12-33-36-60-63-76z" fill="url(#maroon)"/>
     <circle cx="0" cy="18" r="8" fill="#a76a22"/>
   </g>
 </svg>
