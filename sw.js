@@ -6,6 +6,7 @@ const APP_SHELL = [
   './assets/css/styles.css',
   './assets/js/photos.js',
   './assets/js/app.js',
+  './assets/audio/Soundtrack.mp3',
   './icons/apple-touch-icon.png',
   './icons/icon-192.png',
   './icons/icon-512.png'
@@ -25,7 +26,8 @@ function isAppShellRequest(requestUrl) {
     requestUrl.pathname.endsWith('/manifest.webmanifest') ||
     requestUrl.pathname.endsWith('/assets/css/styles.css') ||
     requestUrl.pathname.endsWith('/assets/js/photos.js') ||
-    requestUrl.pathname.endsWith('/assets/js/app.js');
+    requestUrl.pathname.endsWith('/assets/js/app.js') ||
+    requestUrl.pathname.endsWith('/assets/audio/Soundtrack.mp3');
 }
 
 self.addEventListener('fetch', event => {

@@ -1,0 +1,30 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 1600">
+  <defs>
+    <linearGradient id="gold" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#f7df9a"/>
+      <stop offset="50%" stop-color="#d7a84c"/>
+      <stop offset="100%" stop-color="#8e5a18"/>
+    </linearGradient>
+    <linearGradient id="maroon" x1="0" x2="1" y1="0" y2="1">
+      <stop offset="0%" stop-color="#8c1f17"/>
+      <stop offset="100%" stop-color="#4e0d0b"/>
+    </linearGradient>
+  </defs>
+  <rect x="18" y="18" width="1164" height="1564" rx="54" fill="none" stroke="url(#maroon)" stroke-width="18"/>
+  <rect x="42" y="42" width="1116" height="1516" rx="42" fill="none" stroke="url(#gold)" stroke-width="8"/>
+  <rect x="88" y="88" width="1024" height="1424" rx="28" fill="none" stroke="#fff4d6" stroke-opacity=".82" stroke-width="4"/>
+  <g fill="none" stroke="url(#gold)" stroke-width="10" stroke-linecap="round">
+    <path d="M120 184c36-46 79-73 134-86"/>
+    <path d="M1080 184c-36-46-79-73-134-86"/>
+    <path d="M120 1416c36 46 79 73 134 86"/>
+    <path d="M1080 1416c-36 46-79-73-134-86"/>
+  </g>
+  <text x="600" y="116" text-anchor="middle" font-size="54" font-family="Georgia, 'Times New Roman', serif" fill="#fff7dc" font-weight="700">Deodhars 25th</text>
+  <text x="600" y="160" text-anchor="middle" font-size="24" font-family="Georgia, 'Times New Roman', serif" fill="#f4d896" letter-spacing="4">ANNIVERSARY SELFIE</text>
+  <text x="600" y="1490" text-anchor="middle" font-size="32" font-family="Georgia, 'Times New Roman', serif" fill="#fff7dc" font-weight="700">2001 - 2026</text>
+  <text x="600" y="1530" text-anchor="middle" font-size="24" font-family="Georgia, 'Times New Roman', serif" fill="#f4d896" letter-spacing="3">GANESH CHATURTHI</text>
+  <g transform="translate(600 228)">
+    <path d="M0-26c20 8 40 24 54 46-25-11-47-11-54-11-7 0-29 0-54 11 14-22 34-38 54-46zm0-19c-27 16-51 43-63 76 31-18 54-21 63-21s32 3 63 21c-12-33-36-60-63-76z" fill="url(#maroon)"/>
+    <circle cx="0" cy="18" r="8" fill="#a76a22"/>
+  </g>
+</svg>

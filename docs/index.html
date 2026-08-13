@@ -13,6 +13,9 @@
   <link rel="stylesheet" href="assets/css/styles.css" />
 </head>
 <body>
+  <audio id="soundtrack" loop preload="auto">
+    <source src="assets/audio/Soundtrack.mp3" type="audio/mpeg" />
+  </audio>
   <main id="app" class="app-shell">
     <input id="selfieInput" class="hidden" type="file" accept="image/*" capture="user" />
     <section id="selfieView" class="view selfie-view" aria-label="Take a selfie">
@@ -52,6 +55,14 @@
             <h1>Ganesh 25th Anniversary</h1>
             <p class="subtitle">25 Years of Blessings, Memories &amp; Togetherness</p>
             <p class="story-blurb">After our marriage in January 2001, we decided to celebrate Ganesh Chaturthi in our home in Piscataway, New Jersey. What began as a small and heartfelt prayer soon grew into a beautiful tradition that brought together family, friends, laughter, devotion, and countless cherished memories. Over the past 25 years, this celebration has become more than an event for us. It has been a journey of togetherness, blessings, and love, shared with everyone who has walked this path with us.</p>
+            <div class="music-row">
+              <span class="music-label">Music</span>
+              <button id="toggleMusic" class="music-toggle" aria-label="Toggle music" aria-pressed="false">
+                <span class="music-toggle-track">
+                  <span class="music-toggle-thumb"></span>
+                </span>
+              </button>
+            </div>
             <div class="hero-actions">
               <button id="showSelfieView" class="primary-button selfie-button">Take A Selfie</button>
               <button id="enterGallery" class="primary-button">Enter Gallery</button>

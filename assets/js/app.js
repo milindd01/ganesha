@@ -2,6 +2,11 @@
   const YEARS = Array.from({ length: 26 }, (_, i) => 2001 + i);
   const rawMedia = window.GANESH_PHOTOS || {};
   const rawDecorations = window.GANESH_DECORATIONS || [];
+  const SELFIE_FRAME_SRC = 'assets/images/selfie-frame.svg';
+  const SELFIE_FRAME_WIDTH = 1200;
+  const SELFIE_FRAME_HEIGHT = 1600;
+  const soundtrack = document.getElementById('soundtrack');
+  const toggleMusicButton = document.getElementById('toggleMusic');
   const selfieView = document.getElementById('selfieView');
   const homeView = document.getElementById('homeView');
   const yearsView = document.getElementById('yearsView');
@@ -34,6 +39,8 @@
   let touchStartX = 0;
   let slideshowMode = 'all-years';
   let selfieImageUrl = '';
+  let musicEnabled = false;
+  let musicPrimed = false;
 
   function clearIdleTimer() {
     if (idleTimer) {
@@ -69,6 +76,40 @@
 
   function isVideo(item) { return item && item.type === 'video'; }
 
+  function updateMusicButton() {
+    toggleMusicButton.classList.toggle('music-off', !musicEnabled);
+    toggleMusicButton.setAttribute('aria-label', musicEnabled ? 'Turn music off' : 'Turn music on');
+    toggleMusicButton.setAttribute('aria-pressed', musicEnabled ? 'true' : 'false');
+  }
+
+  async function setMusicEnabled(enabled) {
+    musicEnabled = enabled;
+    updateMusicButton();
+    if (!soundtrack) return;
+    if (musicEnabled) {
+      soundtrack.volume = 0.45;
+      try {
+        await soundtrack.play();
+      } catch (error) {
+        musicEnabled = false;
+        updateMusicButton();
+      }
+      return;
+    }
+    soundtrack.pause();
+    soundtrack.currentTime = 0;
+  }
+
+  function toggleMusic() {
+    setMusicEnabled(!musicEnabled);
+  }
+
+  function primeMusicOnFirstTap() {
+    if (musicPrimed) return;
+    musicPrimed = true;
+    setMusicEnabled(true);
+  }
+
   function showView(view) {
     [selfieView, homeView, yearsView, galleryView].forEach(v => v.classList.remove('active'));
     view.classList.add('active');
@@ -91,6 +132,42 @@
     }
   }
 
+  function loadImage(src) {
+    return new Promise((resolve, reject) => {
+      const image = new Image();
+      image.onload = () => resolve(image);
+      image.onerror = () => reject(new Error(`Could not load image: ${src}`));
+      image.src = src;
+    });
+  }
+
+  function drawCover(context, image, width, height) {
+    const scale = Math.max(width / image.naturalWidth, height / image.naturalHeight);
+    const drawWidth = image.naturalWidth * scale;
+    const drawHeight = image.naturalHeight * scale;
+    const x = (width - drawWidth) / 2;
+    const y = (height - drawHeight) / 2;
+    context.drawImage(image, x, y, drawWidth, drawHeight);
+  }
+
+  async function renderFramedSelfie(photoSourceUrl) {
+    const [photoImage, frameImage] = await Promise.all([
+      loadImage(photoSourceUrl),
+      loadImage(SELFIE_FRAME_SRC)
+    ]);
+    selfieCanvas.width = SELFIE_FRAME_WIDTH;
+    selfieCanvas.height = SELFIE_FRAME_HEIGHT;
+    const context = selfieCanvas.getContext('2d');
+    context.clearRect(0, 0, SELFIE_FRAME_WIDTH, SELFIE_FRAME_HEIGHT);
+    drawCover(context, photoImage, SELFIE_FRAME_WIDTH, SELFIE_FRAME_HEIGHT);
+    context.drawImage(frameImage, 0, 0, SELFIE_FRAME_WIDTH, SELFIE_FRAME_HEIGHT);
+    const previewBlob = await new Promise(resolve => selfieCanvas.toBlob(resolve, 'image/jpeg', 0.92));
+    if (!previewBlob) throw new Error('Could not prepare framed selfie.');
+    if (selfieImageUrl) URL.revokeObjectURL(selfieImageUrl);
+    selfieImageUrl = URL.createObjectURL(previewBlob);
+    selfiePreview.src = selfieImageUrl;
+  }
+
   function openSelfieCamera() {
     resetSelfieStage();
     setSelfieStatus('Opening camera...');
@@ -105,31 +182,26 @@
     showView(selfieView);
   }
 
-  function loadSelfieFile(file) {
+  async function loadSelfieFile(file) {
     if (!file) {
       setSelfieStatus('No photo selected.');
       return;
     }
-    if (selfieImageUrl) URL.revokeObjectURL(selfieImageUrl);
-    selfieImageUrl = URL.createObjectURL(file);
-    const previewImage = new Image();
-    previewImage.onload = () => {
-      selfieCanvas.width = previewImage.naturalWidth;
-      selfieCanvas.height = previewImage.naturalHeight;
-      const context = selfieCanvas.getContext('2d');
-      context.drawImage(previewImage, 0, 0);
+    const sourceUrl = URL.createObjectURL(file);
+    try {
+      await renderFramedSelfie(sourceUrl);
       selfiePreview.src = selfieImageUrl;
       selfiePreview.classList.remove('hidden');
       selfiePlaceholder.classList.add('hidden');
       retakeSelfieButton.classList.remove('hidden');
       saveSelfieButton.classList.remove('hidden');
       showSelfieResult();
-      setSelfieStatus('Photo captured. Save it, share it, or take another one.');
-    };
-    previewImage.onerror = () => {
+      setSelfieStatus('Photo captured and framed. Save it, share it, or take another one.');
+    } catch (error) {
       setSelfieStatus('Could not load that photo.');
-    };
-    previewImage.src = selfieImageUrl;
+    } finally {
+      URL.revokeObjectURL(sourceUrl);
+    }
   }
 
   async function saveSelfie() {
@@ -389,6 +461,10 @@
   document.getElementById('enterGallery').addEventListener('click', () => showView(yearsView));
   document.getElementById('startDecorations').addEventListener('click', startDecorationsSlideshow);
   document.getElementById('showSelfieView').addEventListener('click', openSelfieCamera);
+  toggleMusicButton.addEventListener('click', event => {
+    event.stopPropagation();
+    toggleMusic();
+  });
   document.querySelectorAll('[data-action="home"]').forEach(b => b.addEventListener('click', () => showView(homeView)));
   document.querySelectorAll('[data-action="years"]').forEach(b => b.addEventListener('click', () => showView(yearsView)));
   document.getElementById('startSlideshow').addEventListener('click', startAllYearsSlideshow);
@@ -427,8 +503,12 @@
   }, { passive: true });
 
   ['touchstart','mousedown','keydown','pointerdown'].forEach(evt => document.addEventListener(evt, resetIdle, { passive: true }));
+  ['touchstart','mousedown','pointerdown'].forEach(evt => {
+    document.addEventListener(evt, primeMusicOnFirstTap, { passive: true, once: true });
+  });
 
   buildYears();
+  updateMusicButton();
   prefetchAllMedia();
   resetIdle();
 })();
