@@ -39,8 +39,8 @@ h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(32px,4.6vw,52px);
 .selfie-view{background:radial-gradient(circle at 50% 24%,#89411f 0,#4f1711 42%,#1b0705 88%,#120302 100%);overflow:auto;-webkit-overflow-scrolling:touch}
 .selfie-panel{width:min(92vw,920px);margin:32px auto;padding:28px;background:linear-gradient(180deg,rgba(255,247,220,.98),rgba(245,220,160,.95));color:var(--ink);border:2px solid rgba(246,200,95,.75);border-radius:34px;box-shadow:0 30px 90px rgba(0,0,0,.42);display:flex;flex-direction:column;align-items:center;text-align:center}
 .selfie-intro{margin:0 0 20px;max-width:640px;font-size:18px;line-height:1.5;color:#5d321d}
-.selfie-stage{width:min(100%,720px);aspect-ratio:4/3;background:linear-gradient(180deg,#2a0a08,#140403);border-radius:28px;overflow:hidden;display:grid;place-items:center;box-shadow:inset 0 0 0 2px rgba(246,200,95,.2)}
-.selfie-video,.selfie-preview{width:100%;height:100%;object-fit:cover;display:block}
+.selfie-stage{width:min(100%,640px);aspect-ratio:3/4;background:linear-gradient(180deg,#2a0a08,#140403);border-radius:28px;overflow:hidden;display:grid;place-items:center;box-shadow:inset 0 0 0 2px rgba(246,200,95,.2)}
+.selfie-video,.selfie-preview{width:100%;height:100%;object-fit:contain;display:block}
 .selfie-placeholder{padding:28px;color:#f5d9ad;font-size:22px;font-family:Georgia,"Times New Roman",serif}
 .selfie-status{margin:18px 0 0;font-size:16px;color:#6a3e25;min-height:24px}
 .selfie-actions{justify-content:center;margin-top:14px}
