@@ -184,6 +184,21 @@
     context.restore();
   }
 
+  function drawContainInRect(context, image, rect, padding = 0) {
+    const innerWidth = rect.width - padding * 2;
+    const innerHeight = rect.height - padding * 2;
+    const scale = Math.min(innerWidth / image.naturalWidth, innerHeight / image.naturalHeight);
+    const drawWidth = image.naturalWidth * scale;
+    const drawHeight = image.naturalHeight * scale;
+    const drawX = rect.x + (rect.width - drawWidth) / 2;
+    const drawY = rect.y + (rect.height - drawHeight) / 2;
+    context.save();
+    roundedRect(context, rect.x, rect.y, rect.width, rect.height, rect.radius);
+    context.clip();
+    context.drawImage(image, drawX, drawY, drawWidth, drawHeight);
+    context.restore();
+  }
+
   async function renderFramedSelfie(photoSourceUrl) {
     const [photoImage, frameImage] = await Promise.all([
       loadImage(photoSourceUrl),
@@ -195,7 +210,18 @@
     context.clearRect(0, 0, SELFIE_FRAME_WIDTH, SELFIE_FRAME_HEIGHT);
     context.fillStyle = '#2a0d0a';
     context.fillRect(0, 0, SELFIE_FRAME_WIDTH, SELFIE_FRAME_HEIGHT);
-    drawCoverInRect(context, photoImage, SELFIE_PHOTO_WINDOW);
+    const isPortraitShot = photoImage.naturalHeight > photoImage.naturalWidth * 1.08;
+    if (isPortraitShot) {
+      context.save();
+      context.globalAlpha = 0.3;
+      drawCover(context, photoImage, SELFIE_FRAME_WIDTH, SELFIE_FRAME_HEIGHT);
+      context.restore();
+      context.fillStyle = 'rgba(42,13,10,0.38)';
+      context.fillRect(0, 0, SELFIE_FRAME_WIDTH, SELFIE_FRAME_HEIGHT);
+      drawContainInRect(context, photoImage, SELFIE_PHOTO_WINDOW, 30);
+    } else {
+      drawCoverInRect(context, photoImage, SELFIE_PHOTO_WINDOW);
+    }
     context.drawImage(frameImage, 0, 0, SELFIE_FRAME_WIDTH, SELFIE_FRAME_HEIGHT);
     const previewBlob = await new Promise(resolve => selfieCanvas.toBlob(resolve, 'image/jpeg', 0.92));
     if (!previewBlob) throw new Error('Could not prepare framed selfie.');
