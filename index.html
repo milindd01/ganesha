@@ -17,22 +17,22 @@
     <source src="assets/audio/Soundtrack.mp3" type="audio/mpeg" />
   </audio>
   <main id="app" class="app-shell">
-    <input id="selfieInput" class="hidden" type="file" accept="image/*" capture="user" />
-    <section id="selfieView" class="view selfie-view" aria-label="Take a selfie">
+    <input id="selfieInput" class="hidden" type="file" accept="image/*" capture="environment" />
+    <section id="selfieView" class="view selfie-view" aria-label="Pic with Bappa">
       <header class="topbar">
         <button class="icon-button" data-action="home" aria-label="Home">⌂</button>
         <div>
-          <div class="topbar-title">Take A Selfie</div>
+          <div class="topbar-title">Pic With Bappa</div>
           <div class="topbar-subtitle">Quick photo capture for guests</div>
         </div>
         <div></div>
       </header>
       <div class="selfie-panel">
-        <p class="selfie-intro">The camera opens right away. After the photo is taken, you can retake it or save/share it from here.</p>
+        <p class="selfie-intro">The camera opens right away. After the photo is taken, the framed photo appears here so you can save or share it.</p>
         <div class="selfie-stage">
           <img id="selfiePreview" class="selfie-preview hidden" alt="Selfie preview" />
           <canvas id="selfieCanvas" class="hidden"></canvas>
-          <div id="selfiePlaceholder" class="selfie-placeholder">Your selfie will appear here after you take it</div>
+          <div id="selfiePlaceholder" class="selfie-placeholder">Your Pic With Bappa will appear here after you take it</div>
         </div>
         <p id="selfieStatus" class="selfie-status">Ready when you are.</p>
         <div class="hero-actions selfie-actions">
@@ -64,7 +64,7 @@
               </button>
             </div>
             <div class="hero-actions">
-              <button id="showSelfieView" class="primary-button selfie-button">Take A Selfie</button>
+              <button id="showSelfieView" class="primary-button selfie-button">Pic With Bappa</button>
               <button id="enterGallery" class="primary-button">Enter Gallery</button>
               <button id="startDecorations" class="primary-button secondary-button">Decor Thru Years</button>
             </div>

@@ -5,6 +5,13 @@
   const SELFIE_FRAME_SRC = 'assets/images/selfie-frame.svg';
   const SELFIE_FRAME_WIDTH = 1200;
   const SELFIE_FRAME_HEIGHT = 1600;
+  const SELFIE_PHOTO_WINDOW = {
+    x: 138,
+    y: 286,
+    width: 924,
+    height: 930,
+    radius: 34
+  };
   const soundtrack = document.getElementById('soundtrack');
   const toggleMusicButton = document.getElementById('toggleMusic');
   const selfieView = document.getElementById('selfieView');
@@ -150,6 +157,33 @@
     context.drawImage(image, x, y, drawWidth, drawHeight);
   }
 
+  function roundedRect(context, x, y, width, height, radius) {
+    context.beginPath();
+    context.moveTo(x + radius, y);
+    context.lineTo(x + width - radius, y);
+    context.quadraticCurveTo(x + width, y, x + width, y + radius);
+    context.lineTo(x + width, y + height - radius);
+    context.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+    context.lineTo(x + radius, y + height);
+    context.quadraticCurveTo(x, y + height, x, y + height - radius);
+    context.lineTo(x, y + radius);
+    context.quadraticCurveTo(x, y, x + radius, y);
+    context.closePath();
+  }
+
+  function drawCoverInRect(context, image, rect) {
+    const scale = Math.max(rect.width / image.naturalWidth, rect.height / image.naturalHeight);
+    const drawWidth = image.naturalWidth * scale;
+    const drawHeight = image.naturalHeight * scale;
+    const drawX = rect.x + (rect.width - drawWidth) / 2;
+    const drawY = rect.y + (rect.height - drawHeight) / 2;
+    context.save();
+    roundedRect(context, rect.x, rect.y, rect.width, rect.height, rect.radius);
+    context.clip();
+    context.drawImage(image, drawX, drawY, drawWidth, drawHeight);
+    context.restore();
+  }
+
   async function renderFramedSelfie(photoSourceUrl) {
     const [photoImage, frameImage] = await Promise.all([
       loadImage(photoSourceUrl),
@@ -159,7 +193,9 @@
     selfieCanvas.height = SELFIE_FRAME_HEIGHT;
     const context = selfieCanvas.getContext('2d');
     context.clearRect(0, 0, SELFIE_FRAME_WIDTH, SELFIE_FRAME_HEIGHT);
-    drawCover(context, photoImage, SELFIE_FRAME_WIDTH, SELFIE_FRAME_HEIGHT);
+    context.fillStyle = '#2a0d0a';
+    context.fillRect(0, 0, SELFIE_FRAME_WIDTH, SELFIE_FRAME_HEIGHT);
+    drawCoverInRect(context, photoImage, SELFIE_PHOTO_WINDOW);
     context.drawImage(frameImage, 0, 0, SELFIE_FRAME_WIDTH, SELFIE_FRAME_HEIGHT);
     const previewBlob = await new Promise(resolve => selfieCanvas.toBlob(resolve, 'image/jpeg', 0.92));
     if (!previewBlob) throw new Error('Could not prepare framed selfie.');
